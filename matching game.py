@@ -17,7 +17,9 @@ candy_rect_t = pygame.Rect(1150,10,270,60)
 ludo_rect_t = pygame.Rect(1150,210,200,60)
 subwaysurfers_rect_t = pygame.Rect(1150,410,150,60)
 temple_run_rect_t = pygame.Rect(1150,610,220,60)
+rectangle1 = pygame.Rect(745,20,30,50)
 
+score = 0
 
 pygame.font.init()
 font = pygame.font.SysFont("Arial",50)
@@ -37,14 +39,21 @@ def draw():
      screen.blit(text2,(1150,210))
      screen.blit(text3,(1150,410))
      screen.blit(text4,(1150,610))
+     pygame.draw.rect(screen,"black",rectangle1)
+     textscore = font.render("score = "+str(score),True, "white")
+     screen.blit(textscore,(600,20))
+     pygame.display.update()
+
 
 rectangles =  {"candy_crush":{"name":candy_rect,"click":False},"ludo":{"name":ludo_rect,"click":False},"subwaysurfers":{"name":subwaysurfers_rect,"click":False},"templerun":{"name":temple_run_rect,"click":False}}
-text =  {"candy_crush":{"name":candy_rect_t,"click":False},"ludo":{"name":ludo_rect_t,"click":False},"subwaysurfers":{"name":subwaysurfers_rect_t,"click":False},"templerun":{"name":temple_run_rect_t,"click":False}}
+text =  {"candy_crush":{"name":candy_rect_t,"click":False,"correct":candy_rect},"ludo":{"name":ludo_rect_t,"click":False,"correct":ludo_rect},"subwaysurfers":{"name":subwaysurfers_rect_t,"click":False,"correct":subwaysurfers_rect},"templerun":{"name":temple_run_rect_t,"click":False,"correct":temple_run_rect}}
 
-draw()
+
+
 image_select = None
 
 while True:
+     draw()
      for event in pygame.event.get():
           if event.type == pygame.QUIT:
                pygame.quit()
@@ -65,8 +74,13 @@ while True:
                          pygame.draw.circle(screen,"blue",end,5)
                          text[tex]["click"] = True
                          pygame.draw.line(screen,"blue",start,end,3)
-                         image_select = None
-          '''if event.type == pygame.MOUSEBUTTONUP:
+                         print(text[tex]["correct"],rectangles[rec]["name"])
+                         if text[tex]["correct"] == rectangles[rec]["name"]:
+                           score = score + 1
+                           print(score)
+                         image_select = None                
+
+     '''if event.type == pygame.MOUSEBUTTONUP:
                end = pygame.mouse.get_pos()
                pygame.draw.circle(screen,"blue",end,5)
                pygame.draw.line(screen,"blue",start,end,3)'''
